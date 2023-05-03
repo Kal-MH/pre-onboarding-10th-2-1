@@ -4,6 +4,7 @@ import axios from 'axios';
 const DEFAULT_ERROR_MESSAGE = 'Error: Network Error';
 
 export const searchKeyword = async (keyword: string) => {
+  console.info('calling api');
   try {
     const { data } = await client.get(`/api/v1/search-conditions/?name=${keyword}`);
 

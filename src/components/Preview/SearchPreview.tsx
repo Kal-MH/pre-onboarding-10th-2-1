@@ -25,7 +25,7 @@ const SearchPreview = ({ keyword, data }: Props) => {
         setCursor((prev) => (prev > 0 ? prev - 1 : prev));
       }
     },
-    [setCursor]
+    [setCursor, data]
   );
 
   useEffect(() => {

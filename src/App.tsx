@@ -5,9 +5,11 @@ import { useClickAwayContext } from './contexts/ClickAwayContext';
 import useClickAway from './hooks/useClickAway';
 import { useSearchKeywordContext } from './contexts/SearchKeywordContext';
 import { searchKeyword } from './api/search';
-import { useEffect } from 'react';
+import { useState } from 'react';
+import { useDebounce } from './hooks/useDebounce';
 
 function App() {
+  const [data, setData] = useState([]);
   const { keyword } = useSearchKeywordContext();
   const { show, handleShow } = useClickAwayContext();
   const ref = useClickAway({
@@ -16,26 +18,24 @@ function App() {
       handleShow(false);
     },
   });
-  //TODO: api호출 처리 및 contextAPI initialization
-  useEffect(() => {
-    const handle = async () => {
-      try {
-        const data = await searchKeyword('우울증');
 
-        console.log(data);
+  useDebounce({
+    fn: async () => {
+      try {
+        if (!keyword) return;
+
+        const data = await searchKeyword(keyword);
+
+        setData(data);
       } catch (e) {
         const errorMessage = e instanceof Error ? e.message : String(e);
         console.error(errorMessage);
       }
-    };
+    },
+    ms: 300,
+    deps: [keyword],
+  });
 
-    handle();
-  }, []);
-  const data = [
-    { name: '우울증', id: 6955 },
-    { name: '우울병', id: 6956 },
-    { name: '우울장애', id: 6957 },
-  ];
   return (
     <S.Container>
       <S.Title>
