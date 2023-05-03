@@ -9,7 +9,6 @@ function App() {
   const ref = useClickAway({
     handler: (e: React.MouseEvent) => {
       e.stopPropagation();
-
       handleShow(false);
     },
   });

@@ -4,11 +4,12 @@ import IconContainer from '../common/IconContainer';
 
 interface Props {
   value: string;
+  cName?: string;
 }
 
-const ListItem = ({ value }: Props) => {
+const ListItem = ({ value, cName }: Props) => {
   return (
-    <S.ListItem>
+    <S.ListItem className={cName}>
       <IconContainer width="15px" height="15px">
         <MagnifyingGlassIcon />
       </IconContainer>
@@ -25,5 +26,9 @@ const S = {
     font-size: 1.8rem;
     display: flex;
     gap: 1rem;
+
+    &.active {
+      background-color: rgba(204, 205, 208, 0.4);
+    }
   `,
 };

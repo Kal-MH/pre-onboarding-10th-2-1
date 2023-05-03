@@ -21,7 +21,7 @@ const useClickAway = ({ handler }: Props) => {
     const handleEvent = (e: any) => {
       e.preventDefault();
       e.stopPropagation();
-      console.log(element.contains(e.target), element, e.target);
+
       !element.contains(e.target) && eventHandler.current(e);
     };
 

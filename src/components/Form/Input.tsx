@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as ClearIcon } from '../../assets/clear.svg';
 import IconContainer from '../common/IconContainer';
@@ -26,7 +25,6 @@ const Input = ({ placeholder }: Props) => {
         placeholder={placeholder}
         onFocus={(e) => {
           e.stopPropagation();
-          console.log('input');
           handleShow(true);
         }}
       />
