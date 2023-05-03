@@ -2,9 +2,15 @@ import styled from 'styled-components';
 import { ReactComponent as MagnifyingGlassIcon } from '../../assets/magnifying-glass.svg';
 import IconContainer from '../common/IconContainer';
 
+const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  e.preventDefault();
+
+  console.log('button Click!');
+};
+
 const Button = () => {
   return (
-    <S.Button>
+    <S.Button onClick={handleButtonClick}>
       <IconContainer width="21px" height="21px">
         <MagnifyingGlassIcon />
       </IconContainer>

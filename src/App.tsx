@@ -3,8 +3,10 @@ import SearchForm from './components/Form/SearchForm';
 import SearchPreview from './components/Preview/SearchPreview';
 import { useClickAwayContext } from './contexts/ClickAwayContext';
 import useClickAway from './hooks/useClickAway';
+import { useSearchKeywordContext } from './contexts/SearchKeywordContext';
 
 function App() {
+  const { keyword } = useSearchKeywordContext();
   const { show, handleShow } = useClickAwayContext();
   const ref = useClickAway({
     handler: (e: React.MouseEvent) => {
@@ -13,6 +15,11 @@ function App() {
     },
   });
   //TODO: api호출 처리 및 contextAPI initialization
+  const data = [
+    { name: '우울증', id: 6955 },
+    { name: '우울병', id: 6956 },
+    { name: '우울장애', id: 6957 },
+  ];
   return (
     <S.Container>
       <S.Title>
@@ -22,7 +29,7 @@ function App() {
       </S.Title>
       <S.FormContainer ref={ref}>
         <SearchForm />
-        {show && <SearchPreview />}
+        {show && <SearchPreview keyword={keyword} data={data} />}
       </S.FormContainer>
     </S.Container>
   );
@@ -35,11 +42,9 @@ const S = {
     max-width: 58rem;
     height: 100vh;
     margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
     background-color: #d0e8fd;
+    padding-top: 15rem;
   `,
   FormContainer: styled.div`
     max-width: 49rem;
@@ -55,7 +60,7 @@ const S = {
     font-weight: bold;
     text-align: center;
     line-height: 1.6;
-    margin-bottom: 2rem;
     letter-spacing: -0.018rem;
+    margin-bottom: 2rem;
   `,
 };

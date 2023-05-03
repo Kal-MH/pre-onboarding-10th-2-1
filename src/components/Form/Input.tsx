@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { ReactComponent as ClearIcon } from '../../assets/clear.svg';
 import IconContainer from '../common/IconContainer';
 import { useClickAwayContext } from '../../contexts/ClickAwayContext';
+import { useSearchKeywordContext } from '../../contexts/SearchKeywordContext';
 
 interface Props {
   placeholder: string;
@@ -9,6 +10,7 @@ interface Props {
 
 const Input = ({ placeholder }: Props) => {
   const { show, handleShow } = useClickAwayContext();
+  const { keyword, handleKeywordChange, handleKeywordClear } = useSearchKeywordContext();
 
   const IconConfig = {
     width: '21px',
@@ -16,6 +18,13 @@ const Input = ({ placeholder }: Props) => {
     position: 'absolute',
     top: '23px',
     right: '10px',
+    color: '#CACBCF',
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    handleKeywordChange(value);
   };
 
   return (
@@ -27,11 +36,15 @@ const Input = ({ placeholder }: Props) => {
           e.stopPropagation();
           handleShow(true);
         }}
+        value={keyword}
+        onChange={handleInputChange}
       />
       {show && (
-        <IconContainer {...IconConfig}>
-          <ClearIcon />
-        </IconContainer>
+        <div onClick={handleKeywordClear}>
+          <IconContainer {...IconConfig}>
+            <ClearIcon />
+          </IconContainer>
+        </div>
       )}
     </S.InputContainer>
   );
@@ -52,7 +65,6 @@ const S = {
     border-color: #ffffff;
     background-color: #ffffff;
     width: 100%;
-    font-size: 1.6rem;
     font-weight: 400;
     line-height: 1.6;
     outline: none;
