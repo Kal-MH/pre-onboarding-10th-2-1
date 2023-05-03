@@ -1,8 +1,16 @@
+import { useState } from 'react';
 import styled from 'styled-components';
-import { ReactComponent as ClearIcon } from '../../assets/magnifying-glass.svg';
+import { ReactComponent as ClearIcon } from '../../assets/clear.svg';
 import IconContainer from '../common/IconContainer';
+import { useClickAwayContext } from '../../contexts/ClickAwayContext';
 
-const Input = () => {
+interface Props {
+  placeholder: string;
+}
+
+const Input = ({ placeholder }: Props) => {
+  const { show, handleShow } = useClickAwayContext();
+
   const IconConfig = {
     width: '21px',
     height: '21px',
@@ -12,18 +20,34 @@ const Input = () => {
   };
 
   return (
-    <div style={{ display: 'flex', position: 'relative', width: '100%' }}>
-      <S.Input type="text" placeholder="검색어를 입력해주세요." />
-      <IconContainer {...IconConfig}>
-        <ClearIcon />
-      </IconContainer>
-    </div>
+    <S.InputContainer>
+      <S.Input
+        type="text"
+        placeholder={placeholder}
+        onFocus={(e) => {
+          e.stopPropagation();
+          console.log('input');
+          handleShow(true);
+        }}
+      />
+      {show && (
+        <IconContainer {...IconConfig}>
+          <ClearIcon />
+        </IconContainer>
+      )}
+    </S.InputContainer>
   );
 };
 
 export default Input;
 
 const S = {
+  InputContainer: styled.div`
+    display: flex;
+    position: relative;
+    width: 100%;
+    z-index: 10;
+  `,
   Input: styled.input`
     border-radius: 4.2rem;
     border: none;

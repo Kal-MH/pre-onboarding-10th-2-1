@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 import { ReactComponent as MagnifyingGlassIcon } from '../../assets/magnifying-glass.svg';
+import IconContainer from '../common/IconContainer';
 
 const Button = () => {
   return (
     <S.Button>
-      <div style={{ width: '21px', height: ' 21px' }}>
+      <IconContainer width="21px" height="21px">
         <MagnifyingGlassIcon />
-      </div>
+      </IconContainer>
     </S.Button>
   );
 };

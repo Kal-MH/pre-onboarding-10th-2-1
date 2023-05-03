@@ -1,8 +1,18 @@
 import styled from 'styled-components';
 import SearchForm from './components/Form/SearchForm';
 import SearchPreview from './components/Preview/SearchPreview';
+import { useClickAwayContext } from './contexts/ClickAwayContext';
+import useClickAway from './hooks/useClickAway';
 
 function App() {
+  const { show, handleShow } = useClickAwayContext();
+  const ref = useClickAway({
+    handler: (e: React.MouseEvent) => {
+      e.stopPropagation();
+
+      handleShow(false);
+    },
+  });
   //TODO: api호출 처리 및 contextAPI initialization
   return (
     <S.Container>
@@ -11,9 +21,9 @@ function App() {
         <br />
         온라인으로 참여하기
       </S.Title>
-      <S.FormContainer>
+      <S.FormContainer ref={ref}>
         <SearchForm />
-        <SearchPreview />
+        {show && <SearchPreview />}
       </S.FormContainer>
     </S.Container>
   );
@@ -33,7 +43,9 @@ const S = {
     background-color: #d0e8fd;
   `,
   FormContainer: styled.div`
+    max-width: 49rem;
     width: 100%;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
