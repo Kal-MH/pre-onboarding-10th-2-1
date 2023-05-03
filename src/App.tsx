@@ -4,6 +4,8 @@ import SearchPreview from './components/Preview/SearchPreview';
 import { useClickAwayContext } from './contexts/ClickAwayContext';
 import useClickAway from './hooks/useClickAway';
 import { useSearchKeywordContext } from './contexts/SearchKeywordContext';
+import { searchKeyword } from './api/search';
+import { useEffect } from 'react';
 
 function App() {
   const { keyword } = useSearchKeywordContext();
@@ -15,6 +17,20 @@ function App() {
     },
   });
   //TODO: api호출 처리 및 contextAPI initialization
+  useEffect(() => {
+    const handle = async () => {
+      try {
+        const data = await searchKeyword('우울증');
+
+        console.log(data);
+      } catch (e) {
+        const errorMessage = e instanceof Error ? e.message : String(e);
+        console.error(errorMessage);
+      }
+    };
+
+    handle();
+  }, []);
   const data = [
     { name: '우울증', id: 6955 },
     { name: '우울병', id: 6956 },
